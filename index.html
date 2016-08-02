@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>form tools</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <style type="text/css">
+        .right {
+            margin-top: 50px;
+            margin-left: 900px;
+        }
+
+        #center {
+            margin-top: 50px;
+        }
+
+        .left {
+            position: absolute;
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+
+        h1 {
+            height: 700px;
+        }
+    </style>
+</head>
+<body>
+<div id="nohappy"></div>
+<script src="./build/react.js"></script>
+<script src="./build/react-dom.js"></script>
+<script src="./build/browser.min.js"></script>
+<script type="text/babel">
+
+    var Select = React.createClass({
+        render: function () {
+            return (
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-info btn-lg dropdown-toggle">select</button>
+                        <button type="button" className="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span className="caret"></span>
+                            <span className="sr-only">Toggle Dropdown</span>
+                        </button>
+                    </div>
+            )
+        }
+    });
+
+    var RightText = React.createClass({
+        render: function () {
+            return (
+                    <div className="right">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <input type="checkbox" />
+                                    </span>
+                                    <textarea type="text" className="form-control">text</textarea>
+                                </div>
+                                <br/>
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <input type="checkbox"/>
+                                    </span>
+                                    <Select/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div className="btn-group" role="group">
+                            <button type="button" className="btn btn-success btn-lg" onClick={this.handleClick}>+
+                            </button>
+                        </div>
+                    </div>
+            )
+        }
+    });
+
+    var Text = React.createClass({
+        render: function () {
+            return (
+                    <div className="left">
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <input type="checkbox"/>
+                                    </span>
+                                    <textarea type="text" className="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            )
+        }
+    });
+
+    var Time = React.createClass({
+        render: function () {
+            return (
+                    <div className="left">
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <input type="checkbox"/>
+                                    </span>
+                                    <textarea type="text" className="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            )
+        }
+    });
+
+    var FormTools = React.createClass({
+        getInitialState(){
+            return {status: false, name: ''};
+
+        },
+
+        handleClick: function () {
+
+        },
+
+        render: function () {
+            return (
+                    <div>
+                        <center>
+                            <div id="center" className="btn-group" role="group">
+                                <button type="button" className="btn btn-info btn-lg">预览</button>
+                            </div>
+                        </center>
+                        <RightText/>
+                    </div>
+            )
+        }
+    });
+
+    ReactDOM.render(
+            <FormTools/>, document.getElementById('nohappy'));
+</script>
+</body>
+</html>

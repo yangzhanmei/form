@@ -18,9 +18,8 @@
             margin-top: 5px;
             margin-left: 0px;
         }
-
-        h1 {
-            height: 700px;
+        .show{
+            margin-left: 570px;
         }
     </style>
 </head>
@@ -31,7 +30,6 @@
 <script src="./build/browser.min.js"></script>
 <script src="./build/ReactRouter.min.js"></script>
 <script type="text/babel">
-    var Link=ReactRouter.Link;
     const Item = React.createClass({
         handelDelete(){
             this.props.deleted(this.props.index);
@@ -39,7 +37,6 @@
         render(){
             if (this.props.text === 'text') {
                 return (
-
                         <div className="input-group input-group-xs">
                             <div className="col-lg-9">
                                 <input type="text" className="form-control"/>
@@ -52,16 +49,17 @@
                         </div>
                 )
             } else {
-                return (<div className="input-group input-group-xs">
-                    <div className="col-lg-10">
-                        <input type="date" className="form-control"/>
-                    </div>
-                    <div className="btn-group" role="group">
-                        <button type="button" className="btn btn-danger btn-sm"
-                                onClick={this.handelDelete}>X
-                        </button>
-                    </div>
-                </div>)
+                return (
+                        <div className="input-group input-group-xs">
+                            <div className="col-lg-10">
+                                <input type="date" className="form-control"/>
+                            </div>
+                            <div className="btn-group" role="group">
+                                <button type="button" className="btn btn-danger btn-sm"
+                                        onClick={this.handelDelete}>X
+                                </button>
+                            </div>
+                        </div>)
 
             }
         }
@@ -79,30 +77,34 @@
         }
     });
 
-    const Look = React.createClass({
+    const NewItem = React.createClass({
+        handelDelete(){
+            this.props.deleted(this.props.index);
+        },
         render(){
-            return <div>
-                <form>
-                    <center>
-                        <div id="center" className="btn-group" role="group">
-                            <button type="button" className="btn btn-info btn-lg">编辑
-                            </button>
+            if (this.props.text === 'text') {
+                return (
+
+                        <div className="input-group input-group-xs">
+                            <div className="col-lg-9">
+                                <input type="text" className="form-control"/>
+                            </div>
                         </div>
-                    </center>
-                </form>
-                <center>
-                    <div id="center" className="btn-group" role="group">
-                        <button type="button" className="btn btn-info btn-lg">提交
-                        </button>
+                )
+            } else {
+                return (<div className="input-group input-group-xs">
+                    <div className="col-lg-10">
+                        <input type="date" className="form-control"/>
                     </div>
-                </center>
-            </div>
+                </div>)
+
+            }
         }
     });
 
     const App = React.createClass({
         getInitialState(){
-            return {count: []}
+            return {count: [], status: true}
         },
         handelClickedText(){
             this.state.count.push('text');
@@ -116,34 +118,67 @@
             this.state.count.splice(index, 1);
             this.setState({count: this.state.count});
         },
+        onClick(){
+            this.setState({status: !this.state.status});
+        },
 
         render(){
-            return (
-                    <div>
-                        <form>
-                            <center>
-                                <div id="center" className="btn-group" role="group">
-                                    <Link to="/Look"><button type="button" className="btn btn-info btn-lg">预览
-                                    </button></Link>
+            if (this.state.status === true) {
+                return (
+                        <div>
+                            <form>
+                                <center>
+                                    <div id="center" className="btn-group" role="group">
+                                        <button type="button" onClick={this.onClick} className="btn btn-info btn-lg">
+                                            预览
+                                        </button>
+                                    </div>
+                                </center>
+                                <div className="right">
+                                    <div id="center" className="btn-group" role="group">
+                                        <button type="button" className="btn btn-default btn-lg"
+                                                onClick={this.handelClickedText}>文本框
+                                        </button>
+                                    </div>
+                                    <br/>
+                                    <div id="center" className="btn-group" role="group">
+                                        <button type="button" className="btn btn-default btn-lg"
+                                                onClick={this.handelClickedDate}>日期框
+                                        </button>
+                                    </div>
                                 </div>
-                            </center>
-                            <div className="right">
-                                <div id="center" className="btn-group" role="group">
-                                    <button type="button" className="btn btn-info btn-lg"
-                                            onClick={this.handelClickedText}>文本框
-                                    </button>
-                                </div>
-                                <br/>
-                                <div id="center" className="btn-group" role="group">
-                                    <button type="button" className="btn btn-info btn-lg"
-                                            onClick={this.handelClickedDate}>日期框
-                                    </button>
-                                </div>
+                            </form>
+                            <Middle count={this.state.count} deleted={this.deleted}/>
+                        </div>
+                )
+            }
+            else {
+                return <div>
+                    <form>
+                        <center>
+                            <div id="center" className="btn-group" role="group">
+                                <button type="button" onClick={this.onClick} className="btn btn-info btn-lg">编辑
+                                </button>
                             </div>
-                        </form>
-                        <Middle count={this.state.count} deleted={this.deleted}/>
-                    </div>
-            )
+                        </center>
+                    </form>
+                    <br/>
+                    <br/>
+                        <div className="show">
+                            {
+                                this.state.count.map((Text, Index)=> {
+                                    return <NewItem index={Index} text={Text}/>;
+                                })
+                            }
+                        </div>
+                    <center>
+                        <div id="center" className="btn-group" role="group">
+                            <button type="button" className="btn btn-success btn-lg">提交
+                            </button>
+                        </div>
+                    </center>
+                </div>
+            }
         }
     });
 
